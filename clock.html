@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #000;
+        }
+
+        .box {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 200px auto;
+            border: 4px solid skyblue;
+            box-shadow: 0px 0px 16px 5px skyblue;
+            border-radius: 50%;
+        }
+
+        /* 先创建好几根线 定位在中心位置 然后分别旋转 */
+        [class^="line"] {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background-color: tomato;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .line2 {
+            transform: rotate(30deg);
+        }
+
+        .line3 {
+            transform: rotate(60deg);
+        }
+
+        .line4 {
+            transform: rotate(90deg);
+        }
+
+        .line5 {
+            transform: rotate(120deg);
+        }
+
+        .line6 {
+            transform: rotate(150deg);
+        }
+
+        /* 创建一个黑色遮罩层 定位在中心 压住中心的线模拟形成指针效果 */
+        .mask {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            background-color: #000;
+            border-radius: 50%;
+        }
+
+        /* 创建白色小圆点压住各个指针 层级调成最高 */
+        .center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 18px;
+            height: 18px;
+            background-color: #fff;
+            border-radius: 50%;
+            z-index: 6;
+        }
+
+        /* 创建时针 */
+
+        .hour {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -100%);
+            width: 4px;
+            height: 25%;
+            background: linear-gradient(to top, #f1536a, #18bee8);
+            transform-origin: bottom;
+            /* 时针一周是12小时 12 * 60 * 60 */
+            animation: rotate 43200s linear infinite;
+        }
+
+        /* 创建分针 */
+
+        .min {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -100%);
+            width: 4px;
+            height: 35%;
+            background: linear-gradient(to top, #7180f7, #fa5e82);
+            transform-origin: bottom;
+            /* 分针针一圈转一个小时 一小时是60*60s */
+            animation: rotate 3600s linear infinite;
+        }
+
+        /* 创建秒针 */
+
+        .sec {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -100%);
+            width: 2px;
+            height: 40%;
+            background: linear-gradient(to top, #32bd91, #8163c3);
+            transform-origin: bottom;
+            /* 秒针一圈转60s */
+            animation: rotate 60s steps(60) infinite;
+        }
+
+        /* 创建动画 一个动画足以,所有指针都是旋转一周,变化的只是旋转一周的时间 */
+        @keyframes rotate {
+            to {
+                /* 此处需要注意，如果直接写旋转，那么绝对定位配合transform: translate(-50%,-50%)的这个属性会被旋转层叠掉，所以必须再利用transform的连写属性重新书写。 */
+                transform: translate(-50%, -100%) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="line1"></div>
+        <div class="line2"></div>
+        <div class="line3"></div>
+        <div class="line4"></div>
+        <div class="line5"></div>
+        <div class="line6"></div>
+        <div class="mask"></div>
+        <div class="center"></div>
+        <div class="hour"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+    </div>
+</body>
+
+</html>
